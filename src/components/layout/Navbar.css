@@ -1,0 +1,50 @@
+﻿.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: var(--surface, #181818);
+  border-bottom: 1px solid var(--border, #282828);
+  z-index: 100;
+}
+
+.navbar-container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+}
+
+.navbar-brand h1 {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.navbar-user {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--background, #121212);
+  border-radius: 20px;
+}
+
+.icon-button {
+  padding: 8px;
+  border-radius: 8px;
+  background: transparent;
+  transition: background 0.15s;
+  cursor: pointer;
+}
+
+.icon-button:hover {
+  background: var(--surface-hover, #282828);
+}

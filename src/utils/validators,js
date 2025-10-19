@@ -1,0 +1,251 @@
+// src/utils/validators.js
+import {
+  MAX_AUDIO_SIZE,
+  MAX_IMAGE_SIZE,
+  AUDIO_MIME_TYPES,
+  IMAGE_MIME_TYPES,
+  ERROR_MESSAGES
+} from './constants';
+
+/**
+ * Validate email
+ */
+export const validateEmail = (email) => {
+  if (!email) {
+    return ERROR_MESSAGES.REQUIRED_FIELD;
+  }
+  
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return ERROR_MESSAGES.INVALID_EMAIL;
+  }
+  
+  return null;
+};
+
+/**
+ * Validate password
+ */
+export const validatePassword = (password) => {
+  if (!password) {
+    return ERROR_MESSAGES.REQUIRED_FIELD;
+  }
+  
+  if (password.length < 6) {
+    return ERROR_MESSAGES.PASSWORD_MIN;
+  }
+  
+  return null;
+};
+
+/**
+ * Validate username
+ */
+export const validateUsername = (username) => {
+  if (!username) {
+    return ERROR_MESSAGES.REQUIRED_FIELD;
+  }
+  
+  if (username.length < 3) {
+    return ERROR_MESSAGES.USERNAME_MIN;
+  }
+  
+  if (username.length > 30) {
+    return 'Username cannot exceed 30 characters';
+  }
+  
+  const usernameRegex = /^[a-zA-Z0-9_]+$/;
+  if (!usernameRegex.test(username)) {
+    return 'Username can only contain letters, numbers, and underscores';
+  }
+  
+  return null;
+};
+
+/**
+ * Validate required field
+ */
+export const validateRequired = (value, fieldName = 'This field') => {
+  if (!value || value.toString().trim() === '') {
+    return `${fieldName} is required`;
+  }
+  return null;
+};
+
+/**
+ * Validate audio file
+ */
+export const validateAudioFile = (file) => {
+  if (!file) {
+    return ERROR_MESSAGES.UPLOAD_AUDIO_REQUIRED;
+  }
+  
+  // Check file size
+  if (file.size > MAX_AUDIO_SIZE) {
+    return `Audio file is too large. Maximum size is ${Math.round(MAX_AUDIO_SIZE / 1024 / 1024)}MB`;
+  }
+  
+  // Check file type
+  if (!AUDIO_MIME_TYPES.includes(file.type)) {
+    return 'Invalid audio format. Supported: MP3, WAV, OGG, M4A';
+  }
+  
+  return null;
+};
+
+/**
+ * Validate image file
+ */
+export const validateImageFile = (file) => {
+  if (!file) {
+    return null; // Image is optional
+  }
+  
+  // Check file size
+  if (file.size > MAX_IMAGE_SIZE) {
+    return `Image is too large. Maximum size is ${Math.round(MAX_IMAGE_SIZE / 1024 / 1024)}MB`;
+  }
+  
+  // Check file type
+  if (!IMAGE_MIME_TYPES.includes(file.type)) {
+    return 'Invalid image format. Supported: JPG, PNG, WEBP';
+  }
+  
+  return null;
+};
+
+/**
+ * Validate song form
+ */
+export const validateSongForm = (formData) => {
+  const errors = {};
+  
+  // Title
+  const titleError = validateRequired(formData.title, 'Title');
+  if (titleError) errors.title = titleError;
+  
+  // Artist
+  const artistError = validateRequired(formData.artist, 'Artist');
+  if (artistError) errors.artist = artistError;
+  
+  // Genre
+  const genreError = validateRequired(formData.genre, 'Genre');
+  if (genreError) errors.genre = genreError;
+  
+  // Audio file (only for upload)
+  if (formData.isUpload) {
+    const audioError = validateAudioFile(formData.audioFile);
+    if (audioError) errors.audioFile = audioError;
+  }
+  
+  // Cover image (optional)
+  if (formData.coverImage) {
+    const imageError = validateImageFile(formData.coverImage);
+    if (imageError) errors.coverImage = imageError;
+  }
+  
+  return {
+    isValid: Object.keys(errors).length === 0,
+    errors
+  };
+};
+
+/**
+ * Validate login form
+ */
+export const validateLoginForm = (formData) => {
+  const errors = {};
+  
+  const emailError = validateEmail(formData.email);
+  if (emailError) errors.email = emailError;
+  
+  const passwordError = validatePassword(formData.password);
+  if (passwordError) errors.password = passwordError;
+  
+  return {
+    isValid: Object.keys(errors).length === 0,
+    errors
+  };
+};
+
+/**
+ * Validate signup form
+ */
+export const validateSignupForm = (formData) => {
+  const errors = {};
+  
+  const usernameError = validateUsername(formData.username);
+  if (usernameError) errors.username = usernameError;
+  
+  const emailError = validateEmail(formData.email);
+  if (emailError) errors.email = emailError;
+  
+  const passwordError = validatePassword(formData.password);
+  if (passwordError) errors.password = passwordError;
+  
+  // Confirm password
+  if (formData.confirmPassword) {
+    if (formData.password !== formData.confirmPassword) {
+      errors.confirmPassword = 'Passwords do not match';
+    }
+  }
+  
+  return {
+    isValid: Object.keys(errors).length === 0,
+    errors
+  };
+};
+
+/**
+ * Sanitize input
+ */
+export const sanitizeInput = (input) => {
+  if (typeof input !== 'string') return input;
+  
+  return input
+    .trim()
+    .replace(/[<>]/g, ''); // Remove potential HTML tags
+};
+
+/**
+ * Validate file drop
+ */
+export const validateFileDrop = (files, acceptedTypes, maxSize) => {
+  if (!files || files.length === 0) {
+    return { valid: false, error: 'No file selected' };
+  }
+  
+  const file = files[0];
+  
+  // Check size
+  if (file.size > maxSize) {
+    return {
+      valid: false,
+      error: `File too large. Maximum size: ${Math.round(maxSize / 1024 / 1024)}MB`
+    };
+  }
+  
+  // Check type
+  if (!acceptedTypes.includes(file.type)) {
+    return {
+      valid: false,
+      error: 'Invalid file type'
+    };
+  }
+  
+  return { valid: true, file };
+};
+
+export default {
+  validateEmail,
+  validatePassword,
+  validateUsername,
+  validateRequired,
+  validateAudioFile,
+  validateImageFile,
+  validateSongForm,
+  validateLoginForm,
+  validateSignupForm,
+  sanitizeInput,
+  validateFileDrop
+};
