@@ -13,27 +13,36 @@ const Navbar = () => {
 
   const handleLogout = () => {
     logout();
+    navigate('/login');
+  };
+
+  // Get user initials for avatar
+  const getUserInitials = () => {
+    if (!user?.username) return 'U';
+    return user.username.charAt(0).toUpperCase();
   };
 
   return (
     <nav className="navbar">
       <div className="navbar-container">
         <div className="navbar-brand">
-          <h1>🎵 Music Player</h1>
+          <h1>Aureo</h1>
         </div>
 
         <div className="navbar-actions">
           <button 
             className="icon-button" 
             onClick={toggleTheme}
-            title={isDark ? 'Light mode' : 'Dark mode'}
+            title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
           >
             {isDark ? <FiSun size={20} /> : <FiMoon size={20} />}
           </button>
 
           <div className="navbar-user">
-            <FiUser size={20} />
-            <span>{user?.username}</span>
+            <div className="user-avatar">
+              {getUserInitials()}
+            </div>
+            <span>{user?.username || 'User'}</span>
           </div>
 
           <button 
