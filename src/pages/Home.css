@@ -1,0 +1,368 @@
+/* src/pages/Home.css - Spotify Clone Home Page */
+
+/* Page Layout */
+.spotify-home-page {
+  min-height: 100vh;
+  background: #000;
+  color: #fff;
+}
+
+/* Header */
+.spotify-home-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(10px);
+  z-index: 100;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.spotify-home-header-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.spotify-home-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: #fff;
+}
+
+.spotify-logo-svg {
+  width: 132px;
+  height: 40px;
+  fill: #fff;
+}
+
+.aureo-home-text,
+.aureo-footer-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1db954;
+  margin-left: 0.5rem;
+}
+
+/* Navigation */
+.spotify-home-nav {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.nav-link-login {
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.nav-link-login:hover {
+  color: #1db954;
+}
+
+.nav-btn-signup {
+  padding: 0.875rem 2rem;
+  background: #fff;
+  color: #000;
+  border-radius: 500px;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.nav-btn-signup:hover {
+  transform: scale(1.04);
+  background: #f0f0f0;
+}
+
+/* Hero Section */
+.spotify-hero {
+  padding: 10rem 2rem 6rem;
+  background: linear-gradient(180deg, #1db954 0%, #191414 100%);
+  text-align: center;
+}
+
+.spotify-hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.spotify-hero-title {
+  font-size: 6rem;
+  font-weight: 900;
+  color: #fff;
+  margin-bottom: 1.5rem;
+  line-height: 1.1;
+  letter-spacing: -2px;
+}
+
+.spotify-hero-subtitle {
+  font-size: 1.5rem;
+  color: #fff;
+  margin-bottom: 3rem;
+  font-weight: 400;
+}
+
+.spotify-hero-btn {
+  display: inline-block;
+  padding: 1rem 3rem;
+  background: #fff;
+  color: #000;
+  border-radius: 500px;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  letter-spacing: 1px;
+}
+
+.spotify-hero-btn:hover {
+  transform: scale(1.06);
+  background: #f0f0f0;
+}
+
+/* Features Section */
+.spotify-features {
+  padding: 6rem 2rem;
+  background: #000;
+}
+
+.spotify-features-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 3rem;
+}
+
+.feature-card {
+  text-align: center;
+  padding: 2rem;
+}
+
+.feature-icon {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+  filter: drop-shadow(0 0 20px rgba(29, 185, 84, 0.3));
+}
+
+.feature-card h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.feature-card p {
+  font-size: 1rem;
+  color: #b3b3b3;
+  line-height: 1.6;
+}
+
+/* Footer */
+.spotify-home-footer {
+  background: #000;
+  padding: 4rem 2rem 2rem;
+  border-top: 1px solid #292929;
+}
+
+.spotify-footer-content {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 3rem;
+}
+
+.footer-logo-svg {
+  width: 132px;
+  height: 40px;
+  fill: #fff;
+}
+
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 2rem;
+  border-top: 1px solid #292929;
+}
+
+.footer-bottom p {
+  color: #6a6a6a;
+  font-size: 0.875rem;
+}
+
+.footer-links {
+  display: flex;
+  gap: 2rem;
+}
+
+.footer-links a {
+  color: #6a6a6a;
+  font-size: 0.875rem;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: #fff;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .spotify-hero-title {
+    font-size: 4.5rem;
+  }
+
+  .spotify-hero-subtitle {
+    font-size: 1.25rem;
+  }
+
+  .spotify-features-content {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .spotify-home-header-content {
+    padding: 0 1.5rem;
+  }
+
+  .spotify-logo-svg {
+    width: 100px;
+    height: 30px;
+  }
+
+  .aureo-home-text {
+    font-size: 1.25rem;
+  }
+
+  .spotify-home-nav {
+    gap: 1rem;
+  }
+
+  .nav-link-login {
+    font-size: 0.9rem;
+  }
+
+  .nav-btn-signup {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .spotify-hero {
+    padding: 8rem 1.5rem 4rem;
+  }
+
+  .spotify-hero-title {
+    font-size: 3rem;
+  }
+
+  .spotify-hero-subtitle {
+    font-size: 1.125rem;
+    margin-bottom: 2rem;
+  }
+
+  .spotify-hero-btn {
+    padding: 0.875rem 2.5rem;
+    font-size: 0.9rem;
+  }
+
+  .spotify-features {
+    padding: 4rem 1.5rem;
+  }
+
+  .spotify-features-content {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: center;
+  }
+
+  .footer-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .spotify-home-header-content {
+    padding: 0 1rem;
+  }
+
+  .spotify-logo-svg {
+    width: 80px;
+    height: 24px;
+  }
+
+  .aureo-home-text {
+    font-size: 1rem;
+  }
+
+  .nav-btn-signup {
+    padding: 0.625rem 1.25rem;
+    font-size: 0.85rem;
+  }
+
+  .spotify-hero {
+    padding: 6rem 1rem 3rem;
+  }
+
+  .spotify-hero-title {
+    font-size: 2.5rem;
+    letter-spacing: -1px;
+  }
+
+  .spotify-hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .spotify-hero-btn {
+    padding: 0.75rem 2rem;
+    font-size: 0.85rem;
+  }
+
+  .feature-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .feature-card h3 {
+    font-size: 1.25rem;
+  }
+
+  .feature-card p {
+    font-size: 0.9rem;
+  }
+
+  .footer-logo-svg {
+    width: 100px;
+    height: 30px;
+  }
+
+  .aureo-footer-text {
+    font-size: 1.25rem;
+  }
+}
