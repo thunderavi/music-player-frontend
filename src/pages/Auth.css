@@ -1,0 +1,281 @@
+/* src/pages/Auth.css - Spotify Clone Design */
+
+/* Page Layout */
+.spotify-auth-page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #000000 0%, #121212 100%);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.spotify-auth-header {
+  padding: 2rem 0;
+  background: #000;
+}
+
+.spotify-header-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.spotify-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: #fff;
+}
+
+.spotify-logo-svg {
+  width: 132px;
+  height: 40px;
+  fill: #fff;
+}
+
+.aureo-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1db954;
+  margin-left: 0.5rem;
+}
+
+/* Main Content */
+.spotify-auth-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+}
+
+.spotify-auth-box {
+  width: 100%;
+  max-width: 450px;
+  background: #000;
+  border-radius: 8px;
+  padding: 3rem 3rem 2rem;
+}
+
+.spotify-auth-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 2rem;
+  text-align: center;
+  line-height: 1.2;
+}
+
+
+
+/* Form */
+.spotify-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.spotify-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.spotify-form-group label {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.spotify-form-group input {
+  width: 100%;
+  padding: 0.875rem 0.75rem;
+  background: #121212;
+  border: 1px solid #878787;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.spotify-form-group input::placeholder {
+  color: #6a6a6a;
+}
+
+.spotify-form-group input:hover {
+  border-color: #fff;
+}
+
+.spotify-form-group input:focus {
+  outline: none;
+  border-color: #fff;
+  box-shadow: 0 0 0 3px #fff;
+}
+
+/* Remember Me Checkbox */
+.spotify-remember {
+  margin: 0.5rem 0;
+}
+
+.spotify-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+
+.spotify-checkbox input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: #1db954;
+}
+
+/* Login Button */
+.spotify-btn-login {
+  width: 100%;
+  padding: 0.875rem 2rem;
+  background: #1db954;
+  color: #000;
+  border: none;
+  border-radius: 500px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.spotify-btn-login:hover:not(:disabled) {
+  transform: scale(1.04);
+  background: #1ed760;
+}
+
+.spotify-btn-login:disabled {
+  background: #535353;
+  cursor: not-allowed;
+}
+
+/* Signup Button */
+.spotify-btn-signup {
+  width: 100%;
+  padding: 0.875rem 2rem;
+  background: #1db954;
+  color: #000;
+  border: none;
+  border-radius: 500px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 0.5rem;
+}
+
+.spotify-btn-signup:hover:not(:disabled) {
+  transform: scale(1.04);
+  background: #1ed760;
+}
+
+.spotify-btn-signup:disabled {
+  background: #535353;
+  cursor: not-allowed;
+}
+
+/* Forgot Password Link */
+.spotify-forgot-password {
+  display: block;
+  text-align: center;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: underline;
+  margin-top: 1.5rem;
+  transition: color 0.3s ease;
+}
+
+.spotify-forgot-password:hover {
+  color: #1db954;
+}
+
+/* Sign Up / Login Prompt */
+.spotify-signup-prompt,
+.spotify-login-prompt {
+  text-align: center;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid #292929;
+}
+
+.spotify-signup-prompt span,
+.spotify-login-prompt span {
+  color: #6a6a6a;
+  font-size: 1rem;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+/* Sign Up / Login Links */
+.spotify-signup-link,
+.spotify-login-link {
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: underline;
+  transition: color 0.3s ease;
+  display: inline-block;
+}
+
+.spotify-signup-link:hover,
+.spotify-login-link:hover {
+  color: #1db954;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .spotify-auth-box {
+    padding: 2rem 1.5rem;
+    max-width: 100%;
+  }
+
+  .spotify-auth-title {
+    font-size: 1.75rem;
+  }
+
+  .spotify-logo-svg {
+    width: 100px;
+    height: 30px;
+  }
+
+  .aureo-text {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .spotify-auth-content {
+    padding: 2rem 0.5rem;
+  }
+
+  .spotify-auth-box {
+    padding: 1.5rem 1rem;
+  }
+
+  .spotify-auth-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .spotify-social-btn,
+  .spotify-social-btn-outline,
+  .spotify-btn-login,
+  .spotify-btn-signup {
+    font-size: 0.875rem;
+    padding: 0.75rem 1.5rem;
+  }
+}

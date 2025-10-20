@@ -1,25 +1,21 @@
 /* src/components/layout/Layout.css */
-.layout {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-.layout-content {
+.container-wrapper {
   display: flex;
   flex: 1;
-  padding-top: 60px; /* Height of navbar */
-  padding-bottom: 90px; /* Height of player */
+  overflow: hidden;
 }
 
 .main-content {
   flex: 1;
-  margin-left: 250px; /* Width of sidebar */
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  margin-left: 300px;
+  margin-bottom: 90px;
 }
 
 @media (max-width: 768px) {
   .main-content {
-    margin-left: 0;
+    margin-left: 70px;
   }
 }
