@@ -1,18 +1,19 @@
 // src/services/songService.js
-import api, { createFormDataConfig } from './api';
-import { ENDPOINTS, API_URL } from '../utils/constants';
+import api from './api';
+import { formatSongUrls, formatSongsUrls, getAudioStreamUrl as getStreamUrl } from '../utils/imageHelper';
 
-/**
- * Song Service
- * Handles all song related API calls
- */
-
-// Get all songs (user's + default)
+// Get all songs (user's songs + default songs)
 export const getAllSongs = async (page = 1, limit = 20) => {
   try {
-    const response = await api.get(ENDPOINTS.SONGS, {
+    const response = await api.get('/songs', {
       params: { page, limit }
     });
+    
+    // Format songs with full URLs
+    if (response.data.success && response.data.data) {
+      response.data.data = formatSongsUrls(response.data.data);
+    }
+    
     return response.data;
   } catch (error) {
     throw error;
@@ -22,9 +23,15 @@ export const getAllSongs = async (page = 1, limit = 20) => {
 // Get user's uploaded songs only
 export const getMySongs = async (page = 1, limit = 20) => {
   try {
-    const response = await api.get(ENDPOINTS.MY_SONGS, {
+    const response = await api.get('/songs/my-songs', {
       params: { page, limit }
     });
+    
+    // Format songs with full URLs
+    if (response.data.success && response.data.data) {
+      response.data.data = formatSongsUrls(response.data.data);
+    }
+    
     return response.data;
   } catch (error) {
     throw error;
@@ -34,7 +41,13 @@ export const getMySongs = async (page = 1, limit = 20) => {
 // Get single song by ID
 export const getSongById = async (id) => {
   try {
-    const response = await api.get(ENDPOINTS.SONG_BY_ID(id));
+    const response = await api.get(`/songs/${id}`);
+    
+    // Format song with full URLs
+    if (response.data.success && response.data.song) {
+      response.data.song = formatSongUrls(response.data.song);
+    }
+    
     return response.data;
   } catch (error) {
     throw error;
@@ -44,35 +57,45 @@ export const getSongById = async (id) => {
 // Upload new song
 export const uploadSong = async (formData, onProgress) => {
   try {
-    const response = await api.post(
-      ENDPOINTS.UPLOAD_SONG,
-      formData,
-      {
-        ...createFormDataConfig(),
-        onUploadProgress: (progressEvent) => {
-          if (onProgress) {
-            const percentCompleted = Math.round(
-              (progressEvent.loaded * 100) / progressEvent.total
-            );
-            onProgress(percentCompleted);
-          }
+    const response = await api.post('/songs/upload', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      },
+      onUploadProgress: (progressEvent) => {
+        const percentCompleted = Math.round(
+          (progressEvent.loaded * 100) / progressEvent.total
+        );
+        if (onProgress) {
+          onProgress(percentCompleted);
         }
       }
-    );
+    });
+    
+    // Format song with full URLs
+    if (response.data.success && response.data.song) {
+      response.data.song = formatSongUrls(response.data.song);
+    }
+    
     return response.data;
   } catch (error) {
     throw error;
   }
 };
 
-// Update song metadata
+// Update song
 export const updateSong = async (id, formData) => {
   try {
-    const response = await api.put(
-      ENDPOINTS.UPDATE_SONG(id),
-      formData,
-      createFormDataConfig()
-    );
+    const response = await api.put(`/songs/${id}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+    
+    // Format song with full URLs
+    if (response.data.success && response.data.song) {
+      response.data.song = formatSongUrls(response.data.song);
+    }
+    
     return response.data;
   } catch (error) {
     throw error;
@@ -82,7 +105,7 @@ export const updateSong = async (id, formData) => {
 // Delete song
 export const deleteSong = async (id) => {
   try {
-    const response = await api.delete(ENDPOINTS.DELETE_SONG(id));
+    const response = await api.delete(`/songs/${id}`);
     return response.data;
   } catch (error) {
     throw error;
@@ -90,9 +113,17 @@ export const deleteSong = async (id) => {
 };
 
 // Search songs
-export const searchSongs = async (params) => {
+export const searchSongs = async (searchParams) => {
   try {
-    const response = await api.get(ENDPOINTS.SEARCH_SONGS, { params });
+    const response = await api.get('/songs/search', {
+      params: searchParams
+    });
+    
+    // Format songs with full URLs
+    if (response.data.success && response.data.data) {
+      response.data.data = formatSongsUrls(response.data.data);
+    }
+    
     return response.data;
   } catch (error) {
     throw error;
@@ -102,7 +133,7 @@ export const searchSongs = async (params) => {
 // Get all genres
 export const getGenres = async () => {
   try {
-    const response = await api.get(ENDPOINTS.GENRES);
+    const response = await api.get('/songs/genres');
     return response.data;
   } catch (error) {
     throw error;
@@ -111,35 +142,26 @@ export const getGenres = async () => {
 
 // Get audio stream URL
 export const getAudioStreamUrl = (audioFileId) => {
-  return `${API_URL}${ENDPOINTS.STREAM_AUDIO(audioFileId)}`;
-};
-
-// Get cover image URL
-export const getCoverImageUrl = (coverImageId) => {
-  if (!coverImageId) return null;
-  return `${API_URL}${ENDPOINTS.STREAM_IMAGE(coverImageId)}`;
+  return getStreamUrl(audioFileId);
 };
 
 // Create FormData for song upload
 export const createSongFormData = (songData) => {
   const formData = new FormData();
   
+  // Add text fields
+  if (songData.title) formData.append('title', songData.title);
+  if (songData.artist) formData.append('artist', songData.artist);
+  if (songData.album) formData.append('album', songData.album);
+  if (songData.genre) formData.append('genre', songData.genre);
+  
+  // Add files
   if (songData.audioFile) {
     formData.append('audioFile', songData.audioFile);
   }
-  
   if (songData.coverImage) {
     formData.append('coverImage', songData.coverImage);
   }
-  
-  formData.append('title', songData.title);
-  formData.append('artist', songData.artist);
-  
-  if (songData.album) {
-    formData.append('album', songData.album);
-  }
-  
-  formData.append('genre', songData.genre);
   
   return formData;
 };
@@ -154,6 +176,5 @@ export default {
   searchSongs,
   getGenres,
   getAudioStreamUrl,
-  getCoverImageUrl,
   createSongFormData
 };
