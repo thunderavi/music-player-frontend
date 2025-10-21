@@ -1,0 +1,353 @@
+.my-songs-page {
+  background: #121212;
+  min-height: 100vh;
+  color: #fff;
+  padding: 24px 32px 100px;
+}
+
+.page-header-section {
+  margin-bottom: 24px;
+}
+
+.page-header-section h1 {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  color: #fff;
+}
+
+.page-subtitle {
+  color: #b3b3b3;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+/* Table Styles */
+.songs-table-wrapper {
+  margin-top: 24px;
+}
+
+.songs-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #b3b3b3;
+}
+
+.songs-table thead {
+  border-bottom: 1px solid #282828;
+}
+
+.songs-table thead th {
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #b3b3b3;
+}
+
+.songs-table thead th:first-child {
+  width: 40px;
+  text-align: center;
+}
+
+.songs-table thead th:last-child {
+  width: 180px;
+  text-align: right;
+}
+
+.songs-table tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.songs-table tbody tr:hover {
+  background-color: #1a1a1a;
+}
+
+.songs-table tbody td {
+  padding: 12px 16px;
+  font-size: 14px;
+  border: none;
+}
+
+/* Track Number Column */
+.track-number-cell {
+  text-align: center;
+  width: 40px;
+  position: relative;
+}
+
+.track-number {
+  color: #b3b3b3;
+}
+
+.track-play-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  align-items: center;
+  justify-content: center;
+}
+
+.songs-table tbody tr:hover .track-number {
+  display: none;
+}
+
+.songs-table tbody tr:hover .track-play-btn {
+  display: flex;
+}
+
+/* Title Column */
+.title-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.song-thumbnail {
+  width: 40px;
+  height: 40px;
+  background: #282828;
+  border-radius: 4px;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.song-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.song-thumbnail-icon {
+  font-size: 18px;
+}
+
+.song-details {
+  min-width: 0;
+}
+
+.song-name {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 400;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Artist, Album Columns */
+.artist-name,
+.album-name {
+  color: #b3b3b3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.songs-table tbody tr:hover .artist-name,
+.songs-table tbody tr:hover .album-name {
+  color: #fff;
+}
+
+/* Genre Badge */
+.genre-tag {
+  display: inline-block;
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  font-size: 12px;
+  color: #b3b3b3;
+  font-weight: 500;
+}
+
+/* Actions Column */
+.actions-cell {
+  text-align: right;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.songs-table tbody tr:hover .actions-cell {
+  opacity: 1;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.icon-btn {
+  border: none;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.icon-btn.btn-play {
+  background: #1ed760;
+  color: #000;
+}
+
+.icon-btn.btn-play:hover {
+  background: #1fdf64;
+  transform: scale(1.05);
+}
+
+.icon-btn.btn-edit {
+  background: #3b82f6;
+  color: #fff;
+  margin-left: 8px;
+}
+
+.icon-btn.btn-edit:hover {
+  background: #2563eb;
+  transform: scale(1.05);
+}
+
+.icon-btn.btn-delete {
+  background: #ef4444;
+  color: #fff;
+  margin-left: 8px;
+}
+
+.icon-btn.btn-delete:hover {
+  background: #dc2626;
+  transform: scale(1.05);
+}
+
+/* Empty State */
+.empty-state-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 64px;
+  opacity: 0.3;
+  margin-bottom: 24px;
+}
+
+.empty-state-container h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.empty-state-container p {
+  font-size: 16px;
+  color: #b3b3b3;
+  margin-bottom: 24px;
+}
+
+.upload-link-btn {
+  display: inline-block;
+  padding: 12px 32px;
+  background: #fff;
+  color: #000;
+  text-decoration: none;
+  border-radius: 500px;
+  font-weight: 700;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.upload-link-btn:hover {
+  transform: scale(1.04);
+  background: #f6f6f6;
+}
+
+/* Loading State */
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+}
+
+.loading-spinner {
+  width: 48px;
+  height: 48px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top-color: #1ed760;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: 16px;
+}
+
+.loading-text {
+  color: #b3b3b3;
+  font-size: 14px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .album-name,
+  .genre-tag {
+    display: none;
+  }
+  
+  .songs-table thead th:nth-child(4),
+  .songs-table thead th:nth-child(5) {
+    display: none;
+  }
+  
+  .songs-table tbody td:nth-child(4),
+  .songs-table tbody td:nth-child(5) {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .my-songs-page {
+    padding: 16px 16px 100px;
+  }
+  
+  .page-header-section h1 {
+    font-size: 24px;
+  }
+  
+  .artist-name {
+    display: none;
+  }
+  
+  .songs-table thead th:nth-child(3) {
+    display: none;
+  }
+  
+  .songs-table tbody td:nth-child(3) {
+    display: none;
+  }
+  
+  .actions-cell {
+    opacity: 1;
+  }
+}

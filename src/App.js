@@ -9,7 +9,7 @@ import { PlayerProvider } from './context/PlayerContext';
 import { ThemeProvider } from './context/ThemeContext';
 import { SongProvider } from './context/SongContext';
 
-// Pages (we'll create these in Part C)
+// Pages
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
@@ -18,9 +18,10 @@ import AllSongs from './pages/AllSongs';
 import MySongs from './pages/MySongs';
 import Upload from './pages/Upload';
 import AdminPanel from './pages/AdminPanel';
+import EditSong from './pages/EditSong'; // ✅ Import new page
 import NotFound from './pages/NotFound';
 
-// Components (we'll create these in Part C)
+// Components
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import Layout from './components/layout/Layout';
 
@@ -47,7 +48,13 @@ function App() {
                     <Route path={ROUTES.ALL_SONGS} element={<AllSongs />} />
                     <Route path={ROUTES.MY_SONGS} element={<MySongs />} />
                     <Route path={ROUTES.UPLOAD} element={<Upload />} />
-                    
+
+                    {/* ✅ Add Edit Song Route */}
+                    <Route
+                      path="/edit-song/:id"
+                      element={<EditSong />}
+                    />
+
                     {/* Admin Only Route */}
                     <Route 
                       path={ROUTES.ADMIN} 
