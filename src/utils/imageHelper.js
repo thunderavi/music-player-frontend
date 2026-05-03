@@ -78,10 +78,12 @@ export const formatSongsUrls = (songs) => {
   return songs.map(song => formatSongUrls(song));
 };
 
-export default {
+const imageHelper = {
   getImageUrl,
   getAudioStreamUrl,
   formatSongUrls,
   formatSongsUrls,
   API_BASE_URL
 };
+
+export default imageHelper;

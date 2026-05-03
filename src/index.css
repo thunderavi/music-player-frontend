@@ -8,9 +8,14 @@
 }
 
 :root {
-  /* Spotify Dark Theme Colors */
+  /* Common Colors (Shared across themes) */
   --primary: #1db954;
   --primary-hover: #1ed760;
+  --error: #ec4242;
+  --success: #1db954;
+  --warning: #ffc107;
+  
+  /* Spotify Dark Theme Colors (Default) */
   --background: #121212;
   --surface: #181818;
   --surface-hover: #282828;
@@ -19,9 +24,6 @@
   --text-primary: #ffffff;
   --text-secondary: #b3b3b3;
   --text-tertiary: #808080;
-  --error: #ec4242;
-  --success: #1db954;
-  --warning: #ffc107;
   
   /* Spacing */
   --spacing-xs: 0.25rem;
@@ -42,6 +44,23 @@
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
   --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.4);
   --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.5);
+}
+
+/* Light Theme Overrides */
+[data-theme='light'] {
+  --background: #f8f9fa;
+  --surface: #ffffff;
+  --surface-hover: #f1f3f5;
+  --border: #dee2e6;
+  --border-hover: #ced4da;
+  --text-primary: #212529;
+  --text-secondary: #495057;
+  --text-tertiary: #868e96;
+  
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
 }
 
 html {

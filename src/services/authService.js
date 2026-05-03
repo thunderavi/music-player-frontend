@@ -63,10 +63,12 @@ export const checkAuth = async () => {
   }
 };
 
-export default {
+const authService = {
   signup,
   login,
   logout,
   getCurrentUser,
   checkAuth
 };
+
+export default authService;

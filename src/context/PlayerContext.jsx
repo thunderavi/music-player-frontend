@@ -38,51 +38,18 @@ export const PlayerProvider = ({ children }) => {
     return saved === 'true';
   });
 
-  // Initialize audio element
-  useEffect(() => {
+  // Toggle play/pause
+  const togglePlayPause = useCallback(() => {
     const audio = audioRef.current;
-    audio.volume = volume;
-
-    // Event listeners
-    const handleTimeUpdate = () => setCurrentTime(audio.currentTime);
-    const handleDurationChange = () => setDuration(audio.duration);
-    const handleEnded = () => handleSongEnd();
-    const handlePlay = () => {
-      setIsPlaying(true);
-      setPlayerState(PLAYER_STATES.PLAYING);
-    };
-    const handlePause = () => {
-      setIsPlaying(false);
-      setPlayerState(PLAYER_STATES.PAUSED);
-    };
-    const handleLoadStart = () => setPlayerState(PLAYER_STATES.LOADING);
-    const handleCanPlay = () => {
-      if (playerState === PLAYER_STATES.LOADING) {
-        setPlayerState(PLAYER_STATES.PAUSED);
-      }
-    };
-    const handleError = () => setPlayerState(PLAYER_STATES.ERROR);
-
-    audio.addEventListener('timeupdate', handleTimeUpdate);
-    audio.addEventListener('durationchange', handleDurationChange);
-    audio.addEventListener('ended', handleEnded);
-    audio.addEventListener('play', handlePlay);
-    audio.addEventListener('pause', handlePause);
-    audio.addEventListener('loadstart', handleLoadStart);
-    audio.addEventListener('canplay', handleCanPlay);
-    audio.addEventListener('error', handleError);
-
-    return () => {
-      audio.removeEventListener('timeupdate', handleTimeUpdate);
-      audio.removeEventListener('durationchange', handleDurationChange);
-      audio.removeEventListener('ended', handleEnded);
-      audio.removeEventListener('play', handlePlay);
-      audio.removeEventListener('pause', handlePause);
-      audio.removeEventListener('loadstart', handleLoadStart);
-      audio.removeEventListener('canplay', handleCanPlay);
-      audio.removeEventListener('error', handleError);
-    };
-  }, [playerState]);
+    if (isPlaying) {
+      audio.pause();
+    } else {
+      audio.play().catch(error => {
+        console.error('Play error:', error);
+        setPlayerState(PLAYER_STATES.ERROR);
+      });
+    }
+  }, [isPlaying]);
 
   // Play song
   const playSong = useCallback((song, songList = null) => {
@@ -112,20 +79,7 @@ export const PlayerProvider = ({ children }) => {
         setPlayerState(PLAYER_STATES.ERROR);
       });
     }
-  }, [currentSong, isShuffled]);
-
-  // Toggle play/pause
-  const togglePlayPause = useCallback(() => {
-    const audio = audioRef.current;
-    if (isPlaying) {
-      audio.pause();
-    } else {
-      audio.play().catch(error => {
-        console.error('Play error:', error);
-        setPlayerState(PLAYER_STATES.ERROR);
-      });
-    }
-  }, [isPlaying]);
+  }, [currentSong, isShuffled, togglePlayPause]);
 
   // Play next song
   const playNext = useCallback(() => {
@@ -147,6 +101,12 @@ export const PlayerProvider = ({ children }) => {
     }
   }, [playlist, currentIndex, repeatMode, playSong]);
 
+  // Seek to position
+  const seek = useCallback((time) => {
+    audioRef.current.currentTime = time;
+    setCurrentTime(time);
+  }, []);
+
   // Play previous song
   const playPrevious = useCallback(() => {
     if (playlist.length === 0) return;
@@ -162,7 +122,7 @@ export const PlayerProvider = ({ children }) => {
       setCurrentIndex(prevIndex);
       playSong(playlist[prevIndex]);
     }
-  }, [playlist, currentIndex, currentTime, playSong]);
+  }, [playlist, currentIndex, currentTime, playSong, seek]);
 
   // Handle song end
   const handleSongEnd = useCallback(() => {
@@ -172,12 +132,6 @@ export const PlayerProvider = ({ children }) => {
       playNext();
     }
   }, [repeatMode, playNext]);
-
-  // Seek to position
-  const seek = useCallback((time) => {
-    audioRef.current.currentTime = time;
-    setCurrentTime(time);
-  }, []);
 
   // Change volume
   const changeVolume = useCallback((newVolume) => {
@@ -243,6 +197,99 @@ export const PlayerProvider = ({ children }) => {
     setIsPlaying(false);
     setPlayerState(PLAYER_STATES.IDLE);
   }, []);
+
+  // Initialize audio element
+  useEffect(() => {
+    const audio = audioRef.current;
+    audio.volume = volume;
+
+    // Event listeners
+    const handleTimeUpdate = () => setCurrentTime(audio.currentTime);
+    const handleDurationChange = () => setDuration(audio.duration);
+    const handleEnded = () => handleSongEnd();
+    const handlePlay = () => {
+      setIsPlaying(true);
+      setPlayerState(PLAYER_STATES.PLAYING);
+    };
+    const handlePause = () => {
+      setIsPlaying(false);
+      setPlayerState(PLAYER_STATES.PAUSED);
+    };
+    const handleLoadStart = () => setPlayerState(PLAYER_STATES.LOADING);
+    const handleCanPlay = () => {
+      if (playerState === PLAYER_STATES.LOADING) {
+        setPlayerState(PLAYER_STATES.PAUSED);
+      }
+    };
+    const handleError = () => setPlayerState(PLAYER_STATES.ERROR);
+
+    audio.addEventListener('timeupdate', handleTimeUpdate);
+    audio.addEventListener('durationchange', handleDurationChange);
+    audio.addEventListener('ended', handleEnded);
+    audio.addEventListener('play', handlePlay);
+    audio.addEventListener('pause', handlePause);
+    audio.addEventListener('loadstart', handleLoadStart);
+    audio.addEventListener('canplay', handleCanPlay);
+    audio.addEventListener('error', handleError);
+
+    return () => {
+      audio.removeEventListener('timeupdate', handleTimeUpdate);
+      audio.removeEventListener('durationchange', handleDurationChange);
+      audio.removeEventListener('ended', handleEnded);
+      audio.removeEventListener('play', handlePlay);
+      audio.removeEventListener('pause', handlePause);
+      audio.removeEventListener('loadstart', handleLoadStart);
+      audio.removeEventListener('canplay', handleCanPlay);
+      audio.removeEventListener('error', handleError);
+    };
+  }, [playerState, handleSongEnd, volume]);
+
+  // Keyboard Shortcuts
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      // Don't trigger if user is typing in an input
+      if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+        return;
+      }
+
+      switch (e.code) {
+        case 'Space':
+          e.preventDefault();
+          togglePlayPause();
+          break;
+        case 'ArrowRight':
+          e.preventDefault();
+          seek(Math.min(audioRef.current.currentTime + 5, audioRef.current.duration));
+          break;
+        case 'ArrowLeft':
+          e.preventDefault();
+          seek(Math.max(audioRef.current.currentTime - 5, 0));
+          break;
+        case 'ArrowUp':
+          e.preventDefault();
+          changeVolume(Math.min(volume + 0.1, 1));
+          break;
+        case 'ArrowDown':
+          e.preventDefault();
+          changeVolume(Math.max(volume - 0.1, 0));
+          break;
+        case 'KeyN':
+          playNext();
+          break;
+        case 'KeyP':
+          playPrevious();
+          break;
+        case 'KeyM':
+          toggleMute();
+          break;
+        default:
+          break;
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [togglePlayPause, seek, changeVolume, volume, playNext, playPrevious, toggleMute]);
 
   const value = {
     // State

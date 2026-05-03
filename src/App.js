@@ -1,6 +1,6 @@
 // src/App.jsx
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 
 // Context Providers
@@ -8,6 +8,7 @@ import { AuthProvider } from './context/AuthContext';
 import { PlayerProvider } from './context/PlayerContext';
 import { ThemeProvider } from './context/ThemeContext';
 import { SongProvider } from './context/SongContext';
+import { LibraryProvider } from './context/LibraryContext';
 
 // Pages
 import Home from './pages/Home';
@@ -18,7 +19,10 @@ import AllSongs from './pages/AllSongs';
 import MySongs from './pages/MySongs';
 import Upload from './pages/Upload';
 import AdminPanel from './pages/AdminPanel';
-import EditSong from './pages/EditSong'; // ✅ Import new page
+import EditSong from './pages/EditSong';
+import LikedSongs from './pages/LikedSongs';
+import PlaylistDetails from './pages/PlaylistDetails';
+import Profile from './pages/Profile';
 import NotFound from './pages/NotFound';
 
 // Components
@@ -35,7 +39,8 @@ function App() {
         <AuthProvider>
           <PlayerProvider>
             <SongProvider>
-              <div className="app">
+              <LibraryProvider>
+                <div className="app">
                 <Routes>
                   {/* Public Routes */}
                   <Route path={ROUTES.HOME} element={<Home />} />
@@ -48,6 +53,9 @@ function App() {
                     <Route path={ROUTES.ALL_SONGS} element={<AllSongs />} />
                     <Route path={ROUTES.MY_SONGS} element={<MySongs />} />
                     <Route path={ROUTES.UPLOAD} element={<Upload />} />
+                    <Route path="/liked-songs" element={<LikedSongs />} />
+                    <Route path="/playlists/:id" element={<PlaylistDetails />} />
+                    <Route path="/profile" element={<Profile />} />
 
                     {/* ✅ Add Edit Song Route */}
                     <Route
@@ -96,7 +104,8 @@ function App() {
                     }
                   }}
                 />
-              </div>
+                </div>
+              </LibraryProvider>
             </SongProvider>
           </PlayerProvider>
         </AuthProvider>

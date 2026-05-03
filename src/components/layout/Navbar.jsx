@@ -1,7 +1,7 @@
 // src/components/layout/Navbar.jsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FiLogOut, FiSun, FiMoon, FiUser } from 'react-icons/fi';
+import { FiLogOut, FiSun, FiMoon } from 'react-icons/fi';
 import { useAuth } from '../../hooks/useAuth';
 import { useTheme } from '../../hooks/useTheme';
 import './Navbar.css';
@@ -25,8 +25,8 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        <div className="navbar-brand">
-          <h1>Aureo</h1>
+        <div className="navbar-left">
+          {/* Space for sidebar logo if needed, or search bar */}
         </div>
 
         <div className="navbar-actions">
@@ -38,9 +38,13 @@ const Navbar = () => {
             {isDark ? <FiSun size={20} /> : <FiMoon size={20} />}
           </button>
 
-          <div className="navbar-user">
+          <div className="navbar-user" onClick={() => navigate('/profile')} style={{ cursor: 'pointer' }}>
             <div className="user-avatar">
-              {getUserInitials()}
+              {user?.avatar ? (
+                <img src={user.avatar} alt={user.username} className="avatar-img" />
+              ) : (
+                getUserInitials()
+              )}
             </div>
             <span>{user?.username || 'User'}</span>
           </div>

@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import './Home.css';
 
@@ -79,11 +79,11 @@ const Home = () => {
           <div className="footer-bottom">
             <p>&copy; 2025 Aureo. All rights reserved.</p>
             <div className="footer-links">
-              <a href="#">Legal</a>
-              <a href="#">Privacy Center</a>
-              <a href="#">Privacy Policy</a>
-              <a href="#">Cookies</a>
-              <a href="#">About Ads</a>
+              <a href="#!">Legal</a>
+              <a href="#!">Privacy Center</a>
+              <a href="#!">Privacy Policy</a>
+              <a href="#!">Cookies</a>
+              <a href="#!">About Ads</a>
             </div>
           </div>
         </div>

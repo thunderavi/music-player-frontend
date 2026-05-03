@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { useSongs } from '../hooks/useSongs';
 import { useNavigate } from 'react-router-dom';
 import './Pages.css';

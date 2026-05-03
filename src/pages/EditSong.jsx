@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useSongs } from '../hooks/useSongs';
 import { useNavigate, useParams } from 'react-router-dom';
 import './Pages.css';
@@ -22,9 +22,9 @@ const EditSong = () => {
 
   useEffect(() => {
     loadSong();
-  }, [id]);
+  }, [id, loadSong]);
 
-  const loadSong = async () => {
+  const loadSong = useCallback(async () => {
     setLoading(true);
     const response = await getSongById(id);
     if (response.success && response.song) {
@@ -41,7 +41,7 @@ const EditSong = () => {
       navigate('/my-songs');
     }
     setLoading(false);
-  };
+  }, [id, getSongById, navigate]);
 
   const handleFileChange = (e) => {
     const { files } = e.target;

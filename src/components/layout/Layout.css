@@ -1,21 +1,58 @@
 /* src/components/layout/Layout.css */
-.container-wrapper {
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.layout-content {
   display: flex;
   flex: 1;
-  overflow: hidden;
 }
 
 .main-content {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  margin-left: 300px;
+  margin-top: 64px;
+  margin-left: 260px;
+  margin-right: 280px;
   margin-bottom: 90px;
+  min-height: calc(100vh - 154px);
+  padding: 2rem;
+  overflow-x: hidden;
+  transition: all 0.3s ease;
+}
+
+.page-fade-in {
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1200px) {
+  .main-content {
+    margin-right: 0;
+  }
 }
 
 @media (max-width: 768px) {
   .main-content {
     margin-left: 70px;
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-content {
+    margin-top: 56px;
+    margin-bottom: 80px;
   }
 }

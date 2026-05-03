@@ -1,4 +1,4 @@
-﻿/* src/components/player/AudioPlayer.css - Spotify Style */
+/* src/components/player/AudioPlayer.css - Spotify Style */
 
 .audio-player {
   position: fixed;
@@ -6,8 +6,8 @@
   left: 0;
   right: 0;
   height: 90px;
-  background: #181818;
-  border-top: 1px solid #282828;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
   z-index: 1000;
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
@@ -57,7 +57,7 @@
 .player-title {
   font-weight: 600;
   font-size: 0.875rem;
-  color: #fff;
+  color: var(--text-primary);
   margin-bottom: 0.25rem;
   white-space: nowrap;
   overflow: hidden;
@@ -72,7 +72,7 @@
 
 .player-artist {
   font-size: 0.75rem;
-  color: #b3b3b3;
+  color: var(--text-secondary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -82,7 +82,7 @@
 
 .player-artist:hover {
   text-decoration: underline;
-  color: #fff;
+  color: var(--text-primary);
 }
 
 .btn-like {
@@ -93,22 +93,25 @@
 .player-center {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
   max-width: 722px;
   margin: 0 auto;
+  width: 100%;
+  height: 100%;
 }
 
 .player-buttons {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 .player-button {
   background: transparent;
   border: none;
-  color: #b3b3b3;
+  color: var(--text-secondary);
   cursor: pointer;
   padding: 0.25rem;
   display: flex;
@@ -119,8 +122,12 @@
 }
 
 .player-button:hover {
-  color: #fff;
+  color: var(--text-primary);
   transform: scale(1.06);
+}
+
+.player-button:active {
+  transform: scale(0.95);
 }
 
 .player-button.active {
@@ -134,8 +141,8 @@
 .play-button {
   width: 32px;
   height: 32px;
-  background: #fff;
-  color: #000;
+  background: var(--text-primary);
+  color: var(--background);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -147,8 +154,8 @@
 
 .play-button:hover {
   transform: scale(1.06);
-  background: #fff;
-  color: #000;
+  background: var(--text-primary);
+  color: var(--background);
 }
 
 /* Progress Bar */
@@ -157,11 +164,12 @@
   align-items: center;
   gap: 0.5rem;
   width: 100%;
+  margin-top: 8px;
 }
 
 .player-time {
   font-size: 0.688rem;
-  color: #a7a7a7;
+  color: var(--text-tertiary);
   min-width: 40px;
   text-align: center;
   font-weight: 400;
@@ -170,7 +178,7 @@
 .player-progress-bar {
   flex: 1;
   height: 4px;
-  background: #4d4d4d;
+  background: var(--border-hover);
   border-radius: 2px;
   cursor: pointer;
   position: relative;
@@ -200,7 +208,7 @@
   transform: translateY(-50%);
   width: 12px;
   height: 12px;
-  background: #fff;
+  background: var(--text-primary);
   border-radius: 50%;
   opacity: 0;
   transition: opacity 0.2s ease;
@@ -224,7 +232,7 @@
 .volume-bar {
   width: 93px;
   height: 4px;
-  background: #4d4d4d;
+  background: var(--border-hover);
   border-radius: 2px;
   cursor: pointer;
   position: relative;
@@ -237,7 +245,7 @@
 
 .volume-fill {
   height: 100%;
-  background: #fff;
+  background: var(--text-primary);
   border-radius: 2px;
   position: relative;
   transition: background 0.2s ease;
@@ -254,7 +262,7 @@
   transform: translateY(-50%);
   width: 12px;
   height: 12px;
-  background: #fff;
+  background: var(--text-primary);
   border-radius: 50%;
   opacity: 0;
   transition: opacity 0.2s ease;

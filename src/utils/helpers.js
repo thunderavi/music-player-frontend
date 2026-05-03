@@ -243,7 +243,7 @@ export const sleep = (ms) => {
   return new Promise(resolve => setTimeout(resolve, ms));
 };
 
-export default {
+const helpers = {
   formatDuration,
   formatFileSize,
   formatDate,
@@ -266,3 +266,5 @@ export default {
   deepClone,
   sleep
 };
+
+export default helpers;

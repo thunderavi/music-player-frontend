@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import './Auth.css';
@@ -73,7 +73,7 @@ const Login = () => {
               {loading ? 'Logging in...' : 'Log In'}
             </button>
 
-            <a href="#" className="spotify-forgot-password">Forgot your password?</a>
+            <a href="#!" className="spotify-forgot-password">Forgot your password?</a>
           </form>
 
           <div className="spotify-signup-prompt">

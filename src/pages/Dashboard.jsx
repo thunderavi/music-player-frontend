@@ -1,17 +1,38 @@
-﻿import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { useSongs } from '../hooks/useSongs';
 import { usePlayer } from '../hooks/usePlayer';
 import { Link } from 'react-router-dom';
+import { ROUTES } from '../utils/constants';
+import axios from 'axios';
+import SongActionMenu from '../components/songs/SongActionMenu';
+import SongCardSkeleton from '../components/songs/SongCardSkeleton';
+import Skeleton from '../components/common/Skeleton';
 import './Dashboard.css';
 
 const Dashboard = () => {
-  const { user } = useAuth();
+  useAuth();
   const { songs, loading, fetchAllSongs } = useSongs();
   const { playSong } = usePlayer();
+  const [recommendations, setRecommendations] = useState([]);
 
   useEffect(() => {
     fetchAllSongs(1, 12);
+    
+    const fetchRecommendations = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const res = await axios.get('http://localhost:5000/api/songs/recommendations', {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        if (res.data.success) {
+          setRecommendations(res.data.songs);
+        }
+      } catch (error) {
+        console.error('Error fetching recommendations:', error);
+      }
+    };
+    fetchRecommendations();
   }, [fetchAllSongs]);
 
   const getGreeting = () => {
@@ -38,11 +59,17 @@ const Dashboard = () => {
         <h1>{getGreeting()}</h1>
       </div>
 
-      {/* Quick Picks Grid */}
+      {/* Content */}
       {loading ? (
-        <div className="dashboard-loading">
-          <div className="spinner"></div>
-          <p>Loading your music...</p>
+        <div className="dashboard-section">
+          <div className="section-header">
+            <div style={{ width: '200px' }}><Skeleton variant="text" height="2rem" /></div>
+          </div>
+          <div className="songs-grid">
+            {[...Array(6)].map((_, i) => (
+              <SongCardSkeleton key={i} />
+            ))}
+          </div>
         </div>
       ) : quickPicks.length > 0 ? (
         <>
@@ -64,6 +91,9 @@ const Dashboard = () => {
                   <h3>{song.title}</h3>
                   <p>{song.artist}</p>
                 </div>
+                <div className="quick-pick-actions" onClick={e => e.stopPropagation()}>
+                  <SongActionMenu song={song} />
+                </div>
                 <button className="quick-pick-play-btn">
                   <svg viewBox="0 0 24 24" width="24" height="24">
                     <path fill="currentColor" d="M8 5v14l11-7z"/>
@@ -72,6 +102,46 @@ const Dashboard = () => {
               </div>
             ))}
           </div>
+
+          {/* Made For You Section */}
+          {recommendations.length > 0 && (
+            <div className="dashboard-section">
+              <div className="section-header">
+                <h2>Made For You</h2>
+              </div>
+              <div className="songs-grid">
+                {recommendations.map(song => (
+                  <div 
+                    key={song._id} 
+                    className="song-card"
+                    onClick={() => handlePlay(song)}
+                  >
+                    <div className="song-card-image">
+                      {song.coverImageUrl ? (
+                        <img src={song.coverImageUrl} alt={song.title} />
+                      ) : (
+                        <div className="placeholder-icon">🎵</div>
+                      )}
+                      <button className="play-overlay">
+                        <svg viewBox="0 0 24 24" width="32" height="32">
+                          <path fill="currentColor" d="M8 5v14l11-7z"/>
+                        </svg>
+                      </button>
+                    </div>
+                    <div className="song-card-info">
+                      <div className="song-card-header">
+                        <h3>{song.title}</h3>
+                        <div onClick={e => e.stopPropagation()}>
+                          <SongActionMenu song={song} />
+                        </div>
+                      </div>
+                      <p>{song.artist}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Recently Added Section */}
           {recentlyAdded.length > 0 && (
@@ -101,7 +171,12 @@ const Dashboard = () => {
                       </button>
                     </div>
                     <div className="song-card-info">
-                      <h3>{song.title}</h3>
+                      <div className="song-card-header">
+                        <h3>{song.title}</h3>
+                        <div onClick={e => e.stopPropagation()}>
+                          <SongActionMenu song={song} />
+                        </div>
+                      </div>
                       <p>{song.artist}</p>
                     </div>
                   </div>
@@ -141,7 +216,7 @@ const Dashboard = () => {
                 </div>
               </Link>
 
-              <Link to="/all-songs" className="library-card">
+              <Link to={ROUTES.ALL_SONGS} className="library-card">
                 <div className="library-card-icon">
                   <svg viewBox="0 0 24 24" width="48" height="48">
                     <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>

@@ -166,7 +166,7 @@ export const createSongFormData = (songData) => {
   return formData;
 };
 
-export default {
+const songService = {
   getAllSongs,
   getMySongs,
   getSongById,
@@ -178,3 +178,5 @@ export default {
   getAudioStreamUrl,
   createSongFormData
 };
+
+export default songService;

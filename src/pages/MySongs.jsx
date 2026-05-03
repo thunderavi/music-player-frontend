@@ -1,7 +1,8 @@
-﻿import React, { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSongs } from '../hooks/useSongs';
 import { usePlayer } from '../hooks/usePlayer';
 import { Link, useNavigate } from 'react-router-dom';
+import SongActionMenu from '../components/songs/SongActionMenu';
 import './MySongs.css';
 
 const MySongs = () => {
@@ -117,13 +118,6 @@ const MySongs = () => {
                 <td className="actions-cell">
                   <div className="action-buttons">
                     <button
-                      className="icon-btn btn-play"
-                      onClick={() => handlePlay(song)}
-                      title="Play"
-                    >
-                      Play
-                    </button>
-                    <button
                       className="icon-btn btn-edit"
                       onClick={() => handleEdit(song._id)}
                       title="Edit"
@@ -137,6 +131,9 @@ const MySongs = () => {
                     >
                       Delete
                     </button>
+                    <div onClick={e => e.stopPropagation()}>
+                      <SongActionMenu song={song} />
+                    </div>
                   </div>
                 </td>
               </tr>

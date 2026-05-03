@@ -2,7 +2,7 @@
 
 .spotify-dashboard {
   padding: 1.5rem;
-  color: #fff;
+  color: var(--text-primary);
   min-height: calc(100vh - 90px);
 }
 
@@ -14,7 +14,7 @@
 .dashboard-greeting h1 {
   font-size: 2rem;
   font-weight: 900;
-  color: #fff;
+  color: var(--text-primary);
 }
 
 /* Loading State */
@@ -28,7 +28,7 @@
 }
 
 .dashboard-loading p {
-  color: #b3b3b3;
+  color: var(--text-secondary);
   font-size: 0.95rem;
 }
 
@@ -43,8 +43,9 @@
 .quick-pick-card {
   display: flex;
   align-items: center;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--surface);
   border-radius: 6px;
+  border: 1px solid var(--border);
   overflow: hidden;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -53,7 +54,8 @@
 }
 
 .quick-pick-card:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--surface-hover);
+  border-color: var(--primary);
 }
 
 .quick-pick-image {
@@ -86,7 +88,7 @@
 .quick-pick-info h3 {
   font-size: 1rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--text-primary);
   margin-bottom: 0.25rem;
   white-space: nowrap;
   overflow: hidden;
@@ -95,7 +97,7 @@
 
 .quick-pick-info p {
   font-size: 0.875rem;
-  color: #b3b3b3;
+  color: var(--text-secondary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -148,19 +150,19 @@
 .section-header h2 {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--text-primary);
 }
 
 .section-link {
   font-size: 0.875rem;
   font-weight: 700;
-  color: #b3b3b3;
+  color: var(--text-secondary);
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 .section-link:hover {
-  color: #fff;
+  color: var(--text-primary);
 }
 
 /* Songs Grid - Vertical Cards */
@@ -171,8 +173,9 @@
 }
 
 .song-card {
-  background: #181818;
+  background: var(--surface);
   border-radius: 8px;
+  border: 1px solid var(--border);
   padding: 1rem;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -180,7 +183,8 @@
 }
 
 .song-card:hover {
-  background: #282828;
+  background: var(--surface-hover);
+  border-color: var(--primary);
 }
 
 .song-card-image {
@@ -240,10 +244,21 @@
   color: #000;
 }
 
+.song-card-info {
+  margin-top: 1rem;
+}
+
+.song-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
 .song-card-info h3 {
   font-size: 1rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--text-primary);
   margin-bottom: 0.5rem;
   white-space: nowrap;
   overflow: hidden;
@@ -252,7 +267,7 @@
 
 .song-card-info p {
   font-size: 0.875rem;
-  color: #b3b3b3;
+  color: var(--text-secondary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -269,15 +284,17 @@
   display: flex;
   align-items: center;
   gap: 1.5rem;
-  background: #181818;
+  background: var(--surface);
   border-radius: 8px;
+  border: 1px solid var(--border);
   padding: 1.5rem;
   text-decoration: none;
   transition: all 0.3s ease;
 }
 
 .library-card:hover {
-  background: #282828;
+  background: var(--surface-hover);
+  border-color: var(--primary);
 }
 
 .library-card-icon {
@@ -302,13 +319,13 @@
 .library-card-content h3 {
   font-size: 1.125rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--text-primary);
   margin-bottom: 0.5rem;
 }
 
 .library-card-content p {
   font-size: 0.875rem;
-  color: #b3b3b3;
+  color: var(--text-secondary);
 }
 
 /* Empty State */
@@ -330,13 +347,13 @@
 .dashboard-empty h2 {
   font-size: 2rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--text-primary);
   margin-bottom: 0.75rem;
 }
 
 .dashboard-empty p {
   font-size: 1rem;
-  color: #b3b3b3;
+  color: var(--text-secondary);
   margin-bottom: 2rem;
 }
 
